@@ -49,3 +49,27 @@ describe('GET /api/topics', () => {
         });
     });
 });
+
+describe("GET /api", () => {
+    it("should return JSON object with endpoints details", async () => {
+        const response = await request(app).get("/api");
+        expect(response.status).toEqual(200);
+        
+        const { body } = response;
+        const topicsEndPointObject = body.endPointData["GET /api/topics"];
+        
+        expect(typeof topicsEndPointObject).toEqual("object");
+        expect(topicsEndPointObject).toHaveProperty(
+            "description",
+            expect.any(String)
+        );
+        expect(topicsEndPointObject).toHaveProperty(
+            "queries",
+            expect.any(Array)
+        );
+        expect(topicsEndPointObject).toHaveProperty(
+            "exampleResponse",
+            expect.any(Object)
+        );
+    });
+});

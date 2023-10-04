@@ -1,5 +1,6 @@
 const express = require('express');
-const { getTopics } = require("../controllers/review.controller")
+const { getTopics, getApi } = require("../controllers/review.controller");
+
 const app = express();
 
 app.get("/api/healthcheck", (req, res) => {
@@ -7,6 +8,8 @@ app.get("/api/healthcheck", (req, res) => {
 })
 
 app.get("/api/topics", getTopics);
+
+app.get("/api", getApi);
 
 
 module.exports = app;
