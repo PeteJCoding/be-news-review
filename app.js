@@ -1,13 +1,20 @@
 const express = require("express");
 const apiRouter = require("./routers");
-const errors = require("./Error/errorHandler");
+const errorHandler = require("./utils/errorHandler");
 
 const app = express();
 
+
 app.use(express.json());
+
+
+app.get("/", (req, res) => res.send({ message: "Hello" }));
+
 
 app.use("/api", apiRouter);
 
-app.use(errors);
+
+app.use(errorHandler);
+
 
 module.exports = app;

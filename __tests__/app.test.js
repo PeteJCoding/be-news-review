@@ -1,8 +1,9 @@
 const request = require('supertest');
-const app = require('../routers/topics.router')
+const app = require('../routers/review.router')
 const db = require("../db/connection")
 const testData = require("../db/data/test-data/index");
 const seed = require("../db/seeds/seed");
+
 beforeEach(() =>{
     return seed (testData)
 })
@@ -10,6 +11,7 @@ beforeEach(() =>{
 afterAll(() => {
     return db.end()
 });
+
 
 describe("GET /api/healthcheck", () => {
     test("returns 200 status code", () => {

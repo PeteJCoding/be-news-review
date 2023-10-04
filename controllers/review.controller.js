@@ -1,4 +1,4 @@
-const { fetchTopics } = require("../models/topics.model")
+const { fetchTopics } = require("../models/review.model")
 
 exports.getTopics = async (req, res, next) => {
     fetchTopics().then((topics) => {
