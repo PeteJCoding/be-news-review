@@ -107,7 +107,7 @@ describe("GET /api/articles", () => {
 
 describe("GET /api/articles/:article_id/comments", () => {
     it('Status: 200 "OK" and receive an empty array for a valid article with no comments', async () => {
-        const articleId = 2; // Assuming this ID corresponds to an article with no comments
+        const articleId = 2;
         const { body, status } = await request(app)
             .get(`/api/articles/${articleId}/comments`);
 
@@ -116,6 +116,13 @@ describe("GET /api/articles/:article_id/comments", () => {
             expect(Array.isArray(comments)).toBe(true);
             expect(comments.length).toBe(0);
         }
+    });
+    
+    it('Status: 400 "Bad Request" for an invalid ID', async () => {
+        const invalidArticleId = 'not-an-id';
+        const { status } = await request(app)
+            .get(`/api/articles/${invalidArticleId}/comments`);
+        expect(status).toBe(400);
     });
     
     it('Status: 404 "Not Found" for a non-existent ID', async () => {
@@ -143,8 +150,6 @@ describe("GET /api/articles/:article_id/comments", () => {
                     article_id: articleId,
                 });
             });
-        } else {
-            console.log("The comments array is empty.");
-        }
+        };
     });
 });

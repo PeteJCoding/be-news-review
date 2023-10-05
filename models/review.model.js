@@ -47,10 +47,14 @@ exports.fetchAllArticles = () => {
 };
 
 exports.fetchArticleComments = (id) => {
+  if (!parseInt(id)) {
+    return Promise.reject({ status: 400, message: "Bad Request" });
+  }
+
   return this.fetchArticleById(id)
     .then((article) => {
       if (article.status === 404) return Promise.reject(article);
-      return db.query("SELECT * FROM comments Where article_id = $1", [id])
+      return db.query("SELECT * FROM comments WHERE article_id = $1", [id])
         .then((result) => {
           return result.rows;
         });
