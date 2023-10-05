@@ -19,5 +19,26 @@ exports.fetchApi = async () => {
    
 };
 
+exports.fetchArticleById = async (id) => {
+  try {
+    const { rows } = await db.query(
+      `SELECT 
+      articles.*, COUNT(comments.comment_id)::int AS comment_count
+    FROM articles
+    JOIN comments 
+    ON articles.article_id = comments.article_id
+    WHERE articles.article_id = $1
+    GROUP BY articles.article_id;`,
+      [id]
+    );
+    if (rows.length < 1) {
+      return Promise.reject({ status: 404, message: "No Article Found" });
+    }
+    return rows[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 
 

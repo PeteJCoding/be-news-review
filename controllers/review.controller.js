@@ -1,4 +1,7 @@
-const { fetchTopics, fetchApi } = require("../models/review.model")
+const { fetchTopics, 
+    fetchApi, 
+    fetchArticleById, 
+} = require("../models/review.model");
 
 exports.getTopics = async (req, res, next) => {
     fetchTopics().then((topics) => {
@@ -18,3 +21,14 @@ exports.getApi = (req, res, next) => {
             res.status(500).json({ error: "Internal Server Error" });
         });
 };
+
+exports.getArticleById = async (req, res, next) => {
+    const { article_id: id } = req.params;
+  
+    fetchArticleById(id)
+      .then((article) => {
+        res.status(200).send({ article });
+      })
+      .catch((err) => next(err));
+  };
+
