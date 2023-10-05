@@ -109,4 +109,25 @@ test('Status: 200 "OK" on Valid ID', async () => {
             });
         });
     });
-  })
+  });
+
+  describe("GET /api/articles/:article_id/comments", () => {
+    it('Status: 200 "OK" and receive all article comments', async () => {
+        const articleId = 1;
+        const { body } = await request(app)
+            .get(`/api/articles/${articleId}/comments`)
+            .expect(200);
+        
+        const { comments } = body;
+        comments.forEach((comment) => {
+            expect(comment).toMatchObject({
+                comment_id: expect.any(Number),
+                votes: expect.any(Number),
+                created_at: expect.any(String),
+                author: expect.any(String),
+                body: expect.any(String),
+                article_id: articleId,
+            });
+        });
+    });
+});

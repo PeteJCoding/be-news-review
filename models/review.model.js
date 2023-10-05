@@ -52,5 +52,19 @@ exports.fetchAllArticles = async () => {
   }
 };
 
+exports.fetchArticleComments = async (id) => {
+  try {
+    const article = await this.fetchArticleById(id);
+    if (article.status === 404) return Promise.reject(article);
+    const { rows } = await db.query(
+      "SELECT * FROM comments Where article_id = $1",
+      [id]
+    );
+    return rows;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 
 

@@ -2,6 +2,8 @@ const { fetchTopics,
     fetchApi, 
     fetchArticleById, 
     fetchAllArticles,
+    fetchArticleComments,
+    
 } = require("../models/review.model");
 
 exports.getTopics = async (req, res, next) => {
@@ -42,4 +44,16 @@ exports.getArticleById = async (req, res, next) => {
         next(err);
       });
   };
+
+  exports.getArticleComments = (req, res, next) => {
+    const { article_id: id } = req.params;
+    
+    fetchArticleComments(id)
+      .then((comments) => {
+        res.status(200).send({ comments });
+      })
+      .catch((err) => next(err));
+  };
+  
+
 
