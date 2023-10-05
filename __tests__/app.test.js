@@ -63,6 +63,24 @@ describe("GET /api", () => {
     });
 });
 
+describe("GET /api/articles/article_id", () => {
+    test('Status: 200 "OK" on Valid ID', async () => {
+          const { body } = await request(app).get("/api/articles/1").expect(200);
+          const { article } = body;
+          expect(article).toMatchObject({
+            article_id: expect.any(Number),
+            title: expect.any(String),
+            body: expect.any(String),
+            votes: expect.any(Number),
+            topic: expect.any(String),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            article_img_url: expect.any(String),
+    
+          });
+        });
+});
+
 describe("GET /api/articles", () => {
     it("should return a 200 status code", async () => {
         const response = await request(app).get("/api/articles");
