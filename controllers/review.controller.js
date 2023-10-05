@@ -1,6 +1,7 @@
 const { fetchTopics, 
     fetchApi, 
     fetchArticleById, 
+    fetchAllArticles,
 } = require("../models/review.model");
 
 exports.getTopics = async (req, res, next) => {
@@ -30,5 +31,15 @@ exports.getArticleById = async (req, res, next) => {
         res.status(200).send({ article });
       })
       .catch((err) => next(err));
+  };
+
+  exports.getAllArticles = async (req, res, next) => {
+    fetchAllArticles()
+      .then((articles) => {
+        res.status(200).send({ articles });
+      })
+      .catch((err) => {
+        next(err);
+      });
   };
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getTopics, getApi, getArticleById, } = require("../controllers/review.controller");
+const { getTopics, getApi, getArticleById, getAllArticles, } = require("../controllers/review.controller");
 
 const app = express();
 
@@ -12,6 +12,8 @@ app.get("/api/topics", getTopics);
 app.get("/api", getApi);
 
 app.get("/api/articles/:article_id", getArticleById);
+
+app.get("/api/articles", getAllArticles);
 
 
 

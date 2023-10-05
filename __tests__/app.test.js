@@ -87,7 +87,26 @@ test('Status: 200 "OK" on Valid ID', async () => {
         topic: expect.any(String),
         author: expect.any(String),
         created_at: expect.any(String),
-        comment_count: expect.any(Number),
+        article_img_url: expect.any(String),
+        
       });
     });
   });
+
+  describe("GET /api/articles", () => {
+    it('Status: 200 "OK" and recieve all articles', async () => {
+        const { body } = await request(app).get("/api/articles").expect(200);
+        const { articles } = body;
+        articles.forEach((article) => {
+            expect(article).toMatchObject({
+                article_id: expect.any(Number),
+                title: expect.any(String),
+                votes: expect.any(Number),
+                topic: expect.any(String),
+                author: expect.any(String),
+                created_at: expect.any(String),
+                comment_count: expect.any(Number),
+            });
+        });
+    });
+  })
